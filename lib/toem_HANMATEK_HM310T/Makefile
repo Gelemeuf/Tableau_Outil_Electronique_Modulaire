@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra
 LDFLAGS = -lmodbus
 
-SRCS = src/*.c
+SRCS = src/main.c
 OBJS = $(SRCS:.c=.o)
 EXEC = toem_HANMATEK_HM310T
 

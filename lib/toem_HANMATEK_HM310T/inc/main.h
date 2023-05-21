@@ -1,7 +1,12 @@
 
-//**************************
-//Register adress definition
-//**************************
+#include <stdint.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <modbus/modbus.h>
+
+//***************************
+//Register address definition
+//***************************
 
 //Adress range
 #define MIN_REG 0 	//Premier registre utile
@@ -29,11 +34,36 @@
 
 //Data choosed
 #define SET_VOLTAGE 48
-#define SET_INTENSITY 49
+#define SET_CURRRENT 49
 #define STEP_VOLTAGE_mV 50
 
 //Supply maximum
 #define MAX_VOLTAGE 64
-#define MAX_INTENSITY 65
+#define MAX_CURRENT 65
 
+//***************************
+//        Structures
+//***************************
+
+struct hm310t_config{
+	uint16_t voltage;
+	uint16_t current;
+	bool output_state;
+};
+
+struct hm310t_data{
+	uint16_t voltage;
+	uint16_t current;
+	uint16_t power;
+};
+
+//***************************
+//        Signatures
+//***************************
+
+uint16_t read_reg(uint8_t n_reg, modbus_t * ctx);
+bool write_reg(uint8_t n_reg, uint16_t val, modbus_t * ctx);
+struct hm310t_config * read_config(struct hm310t_config * config);
+struct hm310t_data * read_data(struct hm310t_data * data);
+bool write_config(struct hm310t_config * config);
 
