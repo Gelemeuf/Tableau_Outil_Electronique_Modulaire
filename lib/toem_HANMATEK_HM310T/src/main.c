@@ -46,8 +46,13 @@ int main() {
     // Create Modbus RTU context
     ctx = modbus_new_rtu("/dev/ttyUSB0", 9600, 'N', 8, 1);
     if (ctx == NULL) {
+<<<<<<< HEAD
         fprintf(stderr, "Cannot create Modbus RTU context.\n");
         return 1;
+=======
+        fprintf(stderr, "Impossible de créer le contexte Modbus RTU.\n");
+        return EXIT_FAILURE;
+>>>>>>> 391229033386017688215002db1757fa7ffaf1c8
     }
 
     // Configuration des paramètres série
@@ -57,7 +62,7 @@ int main() {
     if (modbus_connect(ctx) == -1) {
         fprintf(stderr, "Cannot connect to a Modbus peripheral.\n");
         modbus_free(ctx);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     // Lecture de deux registres à partir de l'adresse 0
@@ -65,7 +70,7 @@ int main() {
         fprintf(stderr, "Cannot read Modbus registers.\n");
         modbus_close(ctx);
         modbus_free(ctx);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     // Affichage des valeurs lues
@@ -75,6 +80,7 @@ int main() {
     // Fermeture de la connexion
     modbus_close(ctx);
     modbus_free(ctx);
+<<<<<<< HEAD
 */
     return 0;
 }
