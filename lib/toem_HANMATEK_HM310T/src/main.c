@@ -1,5 +1,6 @@
 #include "../inc/main.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <modbus/modbus.h>
 
 #define LAST_REG 125
@@ -14,7 +15,7 @@ int main() {
     ctx = modbus_new_rtu("/dev/ttyUSB0", 9600, 'N', 8, 1);
     if (ctx == NULL) {
         fprintf(stderr, "Impossible de créer le contexte Modbus RTU.\n");
-        return 1;
+        return EXIT_FAILURE;
     }
 
     // Configuration des paramètres série
@@ -24,7 +25,7 @@ int main() {
     if (modbus_connect(ctx) == -1) {
         fprintf(stderr, "Impossible de se connecter au périphérique Modbus.\n");
         modbus_free(ctx);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     // Lecture de deux registres à partir de l'adresse 0
@@ -32,7 +33,7 @@ int main() {
         fprintf(stderr, "Échec de la lecture des registres Modbus.\n");
         modbus_close(ctx);
         modbus_free(ctx);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     // Affichage des valeurs lues
@@ -43,6 +44,6 @@ int main() {
     modbus_close(ctx);
     modbus_free(ctx);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
