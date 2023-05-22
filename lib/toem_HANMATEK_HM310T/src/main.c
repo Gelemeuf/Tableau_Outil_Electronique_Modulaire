@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include <stdbool.h> //bool
 #include <stdlib.h> //malloc
+#include <string.h> //strcmp
 #include <modbus/modbus.h> //modbus
 
-#define print_output 1
+#define print_debug_info 1
 
 uint16_t read_reg(uint8_t n_reg, modbus_t * ctx){
 	uint16_t value;
@@ -53,10 +54,10 @@ int main(int argc, char * argv[]) {
     	// Create Modbus RTU context
     	ctx = modbus_new_rtu("/dev/ttyUSB0", 9600, 'N', 8, 1);
     	if (ctx == NULL) {
-		if(print_output)printf("cannot create modbus context\n");
+		if(print_debug_info)printf("cannot create modbus context\n");
         	return 1;
     	}
-	if(print_output)printf("modbus context created\n");
+	if(print_debug_info)printf("modbus context created\n");
 
     	// Configuration des paramètres série
     	modbus_set_slave(ctx, 1); // Adresse de l'esclave Modbus
@@ -64,14 +65,51 @@ int main(int argc, char * argv[]) {
     	// Connexion au périphérique Modbus
     	if (modbus_connect(ctx) == -1) {
         	modbus_free(ctx);
-		if(print_output)printf("cannot connect to modbus peripheral\n");
+		if(print_debug_info)printf("cannot connect to modbus peripheral\n");
         	return EXIT_FAILURE;
     	}
-	if(print_output)printf("modbus peripheral connected\n\n");
+	if(print_debug_info)printf("modbus peripheral connected\n\n");
 
 	while(1){
 		read_data(data, ctx);
-		if(print_output)printf("%d;%d;%d",data->voltage,data->current,data->power);
+		if(print_debug_info)printf("%d;%d;%d",data->voltage,data->current,data->power);
+	}
+
+	if(argc > 1){
+		if(strcmp(argv[1],READ_DATA)){
+			if(argc != 2){
+				return EXIT_FAILURE;
+			}
+			else{	
+				struct hm310t_config * config = malloc(sizeof(struct hm310t_config));
+				read_config(config, ctx);
+				printf("%d;%d;%d\n",config->voltage,config->current,config->output_state);
+				free(config);
+			}
+		}
+		else if(strcmp(argv[1],READ_CONFIG)){
+			if(argc != 2){
+				return EXIT_FAILURE;
+			}
+			else{
+				struct hm310t_data * data = malloc(sizeof(struct hm310t_data));
+				read_data(data, ctx);
+				printf("%d;%d;%d\n",data->voltage,data->current,data->power);
+				free(data);
+			}
+		}
+		else if(strcmp(argv[1],WRITE_CONFIG)){
+			if(argc != 5){
+				return EXIT_FAILURE;
+			}
+			else{
+				struct hm310t_config * config = malloc(sizeof(struct hm310t_config));
+				config->voltage = (uint16_t)atoi(argv[1]);
+				config->current = (uint16_t)atoi(argv[2]);
+				config->output_state = (bool)atoi(argv[3]);
+				free(config);
+			}
+		}
 	}
 
     	// Fermeture de la connexion
@@ -82,6 +120,6 @@ int main(int argc, char * argv[]) {
 	free(&config);
 	free(&data);
 
-    	return 0;
+    	return EXIT_SUCCESS;
 }
 

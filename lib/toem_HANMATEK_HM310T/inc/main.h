@@ -5,6 +5,20 @@
 #include <modbus/modbus.h>
 
 //***************************
+//	Arg config API
+//***************************
+
+//Context flag for function call
+#define READ_DATA "--rd"
+#define READ_CONFIG "--rc"
+#define WRITE_CONFIG "--wc"
+
+//Number of arg into each request
+#define READ_DATA_ARG_NUM 0
+#define READ_CONFIG_ARG_NUM 0
+#define WRITE_CONFIG_ARG_NUM 3
+
+//***************************
 //Register address definition
 //***************************
 
