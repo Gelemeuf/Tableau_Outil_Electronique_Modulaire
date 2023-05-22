@@ -34,7 +34,7 @@
 
 //Data choosed
 #define SET_VOLTAGE 48
-#define SET_CURRRENT 49
+#define SET_CURRENT 49
 #define STEP_VOLTAGE_mV 50
 
 //Supply maximum
@@ -62,8 +62,8 @@ struct hm310t_data{
 //***************************
 
 uint16_t read_reg(uint8_t n_reg, modbus_t * ctx);
-bool write_reg(uint8_t n_reg, uint16_t val, modbus_t * ctx);
-struct hm310t_config * read_config(struct hm310t_config * config);
-struct hm310t_data * read_data(struct hm310t_data * data);
-bool write_config(struct hm310t_config * config);
+bool write_reg(uint8_t n_reg, uint16_t value, modbus_t * ctx);
+void read_config(struct hm310t_config * config, modbus_t * ctx);
+void read_data(struct hm310t_data * data, modbus_t * ctx);
+bool write_config(struct hm310t_config * config, modbus_t * ctx);
 
