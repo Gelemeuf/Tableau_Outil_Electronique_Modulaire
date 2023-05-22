@@ -4,7 +4,7 @@ LDFLAGS = -lmodbus
 
 SRCS = src/main.c
 OBJS = $(SRCS:.c=.o)
-EXEC = toem_HANMATEK_HM310T_api
+EXEC = toem_HANTEK_6022BE_api
 
 all: $(EXEC)
 

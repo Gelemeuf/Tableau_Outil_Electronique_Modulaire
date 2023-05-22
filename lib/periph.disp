@@ -1,1 +1,14 @@
-
+hm310t:
+	type: power_supply
+	path: toem_HANMATEK_HM310T/toem_HANMATEK_HM310T_api
+	command: -rc
+		receive : %d;%d;%d
+			correspond : voltage_config;current_config;output_state
+	command: -rd
+		receive: %d;%d;%d
+			correspond : voltage;current;power
+	command: -wd %d %d %d
+		correspond: voltage_config;current_config;output_state
+hantek_6022be:
+	type: scope
+	path: toem_HANTEK_6022BE/toem_HANTEK_6022BE_api

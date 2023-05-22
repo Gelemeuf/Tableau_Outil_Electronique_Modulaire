@@ -2,18 +2,18 @@ CC = gcc
 CFLAGS = -Wall -Wextra
 LDFLAGS = -lmodbus
 
-SRCS = src/main.c
+SRCS = scan.c
 OBJS = $(SRCS:.c=.o)
-EXEC = toem_HANMATEK_HM310T_api
+EXECUTABLE = scan
 
-all: $(EXEC)
+all: $(EXECUTABLE)
 
-$(EXEC): $(OBJS)
+$(EXECUTABLE): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
 
-OBJS: SRCS
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(EXEC)
+	rm -f $(OBJS) $(EXECUTABLE)
 
