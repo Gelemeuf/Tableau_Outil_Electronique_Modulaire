@@ -6,11 +6,11 @@
 #include <string.h> //strcmp
 #include <modbus/modbus.h> //modbus
 
-#define print_debug_info 1
+#define print_debug_info 0
 
 uint16_t read_reg(uint8_t n_reg, modbus_t * ctx){
 	uint16_t value;
-	if (modbus_read_registers(ctx, n_reg, n_reg, &value) == -1){
+	if (modbus_read_registers(ctx, n_reg, 1, &value) == -1){
 		return 0xFFFF; //Data in case of an error
 	}
 	return value;
@@ -33,7 +33,7 @@ void read_config(struct hm310t_config * config, modbus_t * ctx){
 void read_data(struct hm310t_data * data, modbus_t * ctx){
 	data->voltage = read_reg(ACTUAL_VOLTAGE,ctx);
 	data->current = read_reg(ACTUAL_CURRENT,ctx);
-	data->power = read_reg(ACTUAL_POWER_NORMAL,ctx);
+	data->power = read_reg(ACTUAL_POWER_H,ctx);
 	return;
 }
 
@@ -47,8 +47,10 @@ bool write_config(struct hm310t_config * config, modbus_t * ctx){
 
 int main(int argc, char * argv[]) {
 	//Memory struct allocation
+	/*
 	struct hm310t_config * config = malloc(sizeof(struct hm310t_config));
 	struct hm310t_data * data = malloc(sizeof(struct hm310t_data));
+	*/
 	modbus_t *ctx = NULL;
     
     	// Create Modbus RTU context
@@ -70,24 +72,26 @@ int main(int argc, char * argv[]) {
     	}
 	if(print_debug_info)printf("modbus peripheral connected\n\n");
 
+	/*
 	while(1){
 		read_data(data, ctx);
 		if(print_debug_info)printf("%d;%d;%d",data->voltage,data->current,data->power);
 	}
+	*/
 
 	if(argc > 1){
-		if(strcmp(argv[1],READ_DATA)){
+		if(strcmp(argv[1],READ_DATA)==0){
 			if(argc != 2){
 				return EXIT_FAILURE;
 			}
-			else{	
+			else{
 				struct hm310t_config * config = malloc(sizeof(struct hm310t_config));
 				read_config(config, ctx);
 				printf("%d;%d;%d\n",config->voltage,config->current,config->output_state);
 				free(config);
 			}
 		}
-		else if(strcmp(argv[1],READ_CONFIG)){
+		else if(strcmp(argv[1],READ_CONFIG)==0){
 			if(argc != 2){
 				return EXIT_FAILURE;
 			}
@@ -98,15 +102,17 @@ int main(int argc, char * argv[]) {
 				free(data);
 			}
 		}
-		else if(strcmp(argv[1],WRITE_CONFIG)){
+		else if(strcmp(argv[1],WRITE_CONFIG)==0){
 			if(argc != 5){
+				printf("heuuuu\n");
 				return EXIT_FAILURE;
 			}
 			else{
 				struct hm310t_config * config = malloc(sizeof(struct hm310t_config));
-				config->voltage = (uint16_t)atoi(argv[1]);
-				config->current = (uint16_t)atoi(argv[2]);
-				config->output_state = (bool)atoi(argv[3]);
+				printf("%d,%d,%d\n",atoi(argv[2]),atoi(argv[3]),atoi(argv[4]));
+				config->voltage = (uint16_t)atoi(argv[2]);
+				config->current = (uint16_t)atoi(argv[3]);
+				config->output_state = (bool)atoi(argv[4]);
 				free(config);
 			}
 		}
@@ -117,9 +123,10 @@ int main(int argc, char * argv[]) {
     	modbus_free(ctx);
 	
 	//Analocation memory
+	/*
 	free(&config);
 	free(&data);
-
+	*/
     	return EXIT_SUCCESS;
 }
 

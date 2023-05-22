@@ -9,9 +9,9 @@
 //***************************
 
 //Context flag for function call
-#define READ_DATA "--rd"
-#define READ_CONFIG "--rc"
-#define WRITE_CONFIG "--wc"
+#define READ_DATA "-rd"
+#define READ_CONFIG "-rc"
+#define WRITE_CONFIG "-wc"
 
 //Number of arg into each request
 #define READ_DATA_ARG_NUM 0
@@ -27,18 +27,24 @@
 #define MAX_REG 125 	//Dernier registre
 
 //Register saved power supply state on(1) or off(0)
-#define OUTPUT_STATE 1
+#define OUTPUT_STATE 0x01
 
 //Some data about power supply
-#define CALIBER 3 //Caliber reference
-#define NAME0 4 //probably supply reference
-#define NAME1 5 //probably supply reference
+#define CALIBER 0x03 //Model
+#define NAME0 0x04 //probably supply reference
+#define NAME1 0x05 //probably supply reference
 
 //Real time data
-#define ACTUAL_VOLTAGE 16
-#define ACTUAL_CURRENT 17
-#define ACTUAL_POWER_ARROUND 19
-#define ACTUAL_POWER_NORMAL 21
+#define ACTUAL_VOLTAGE 0x10
+#define ACTUAL_CURRENT 0x11
+#define ACTUAL_POWER_H 0x12
+#define ACTUAL_POWER_L 0x13
+
+//OVP & OCP & OPP
+#define OVP 0x20
+#define OCP 0x21
+#define OPP_H 0x22
+#define OPP_L 0x23
 
 //Some Unknown data
 #define UNKNOWN1 32
@@ -49,7 +55,7 @@
 //Data choosed
 #define SET_VOLTAGE 48
 #define SET_CURRENT 49
-#define STEP_VOLTAGE_mV 50
+#define TIME_SPAN 50
 
 //Supply maximum
 #define MAX_VOLTAGE 64
