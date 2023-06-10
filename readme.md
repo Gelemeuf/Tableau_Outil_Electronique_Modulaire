@@ -7,41 +7,41 @@ This soft can be used with the backend TOEM_back. This backend work with TOEM_fr
 
 ## Software Architecture
 
-├── config.sh
-├── install.sh
-├── launch.sh
-├── LICENSE
-├── Makefile
-├── obj
-│   ├── toem_HANMATEK_HM310T
-│   │   ├── inc
-│   │   │   └── main.h
-│   │   ├── Makefile
-│   │   └── src
-│   │       ├── main.c
-│   │       └── speedtest.c
-│   └── toem_HANTEK_6022BE
-│       ├── inc
-│       │   └── main.h
-│       ├── Makefile
-│       └── src
-│           └── main.c
-├── readme.md
-└── src
-    ├── config
-    │   ├── config.c
-    │   ├── config.h
-    │   └── Makefile
-    ├── keepAlive
-    │   ├── keepAlive.c
-    │   ├── keepAlive.h
-    │   ├── Makefile
-    │   └── map.yaml
-    └── mux
-        ├── Makefile
-        ├── mux.c
-        ├── muxconfig.yaml
-        └── mux.h
+|-- obj
+|   |-- toem_HANMATEK_HM310T
+|   |   |-- inc
+|   |   |   `-- main.h
+|   |   |-- src
+|   |   |   |-- main.c
+|   |   |   `-- speedtest.c
+|   |   `-- Makefile
+|   `-- toem_HANTEK_6022BE
+|       |-- inc
+|       |   `-- main.h
+|       |-- src
+|       |   `-- main.c
+|       `-- Makefile
+|-- src
+|   |-- config
+|   |   |-- config.c
+|   |   |-- config.h
+|   |   `-- Makefile
+|   |-- keepAlive
+|   |   |-- keepAlive.c
+|   |   |-- keepAlive.h
+|   |   |-- Makefile
+|   |   `-- map.yaml
+|   `-- mux
+|       |-- Makefile
+|       |-- mux.c
+|       |-- muxconfig.yaml
+|       `-- mux.h
+|-- config.sh
+|-- install.sh
+|-- launch.sh
+|-- LICENSE
+|-- Makefile
+|-- readme.md
 
 ### Config.sh
 
