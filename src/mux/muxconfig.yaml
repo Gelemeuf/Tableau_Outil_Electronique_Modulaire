@@ -1,0 +1,14 @@
+objname : hm310t
+	objpath : ../../obj/toem_HANMATEK_HM310T/toem_HANMATEK_HM310T_api
+	objmap :
+		id : 1
+			usb : ttyUSB0
+		id : 2
+                        usb : ttyUSB1
+objname : hantek6022BE
+        objpath : ../../obj/toem_HANTEK_6022BE/toem_HANMATEK_6022BE_api
+        objmap :
+                id : 3
+                        usb : ttyUSB3
+                id : 4
+                        usb : ttyUSB4

@@ -1,19 +1,36 @@
-CC = gcc
-CFLAGS = -Wall -Wextra
-LDFLAGS = -lmodbus
+SUBDIRS_OBJ := $(wildcard obj/toem_*)
+MUX := src/mux/
+KEEPALIVE := src/keepAlive/
+CONFIG := src/config/
 
-SRCS = src/main.c
-OBJS = $(SRCS:.c=.o)
-EXEC = toem_interface
+.PHONY: all clean $(SUBDIRS_OBJ) $(MUX) $(KEEPALIVE) $(CONFIG)
 
-all: $(EXEC)
+all: $(SUBDIRS_OBJ) $(MUX) $(KEEPALIVE) $(CONFIG)
 
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
+$(SUBDIRS_OBJ):
+	@$(MAKE) -s -C $@
+	@echo "peripheric $@ compiled"
 
-OBJS: SRCS
-	$(CC) $(CFLAGS) -c $< -o $@
+$(MUX):
+	@$(MAKE) -s -C $@
+	@echo "mux compiled"
+
+$(KEEPALIVE):
+	@$(MAKE) -s -C $@
+	@echo "keepAlive compiled"
+
+$(CONFIG):
+	@$(MAKE) -s -C $@
+	@echo "config compiled"
 
 clean:
-	rm -f $(OBJS) $(EXEC)
-
+	@for dir in $(SUBDIRS_OBJ); do \
+		$(MAKE) -s -C $$dir clean; \
+	done
+	@echo "peripheric cleaned"
+	@$(MAKE) -s -C $(MUX) clean
+	@echo "mux cleaned"
+	@$(MAKE) -s -C $(KEEPALIVE) clean
+	@echo "keepAlive cleaned"
+	@$(MAKE) -s -C $(CONFIG) clean
+	@echo "config cleaned"

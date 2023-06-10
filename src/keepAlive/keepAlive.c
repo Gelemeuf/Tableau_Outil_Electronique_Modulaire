@@ -1,4 +1,4 @@
-#include "../inc/main.h"
+#include "keepAlive.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

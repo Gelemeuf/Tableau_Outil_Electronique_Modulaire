@@ -2,9 +2,9 @@ CC = gcc
 CFLAGS = -Wall -Wextra
 LDFLAGS = -lmodbus
 
-SRCS = src/main.c
+SRCS = keepAlive.c
 OBJS = $(SRCS:.c=.o)
-EXEC = KeepAliveSpliter
+EXEC = keepAlive
 
 all: $(EXEC)
 
